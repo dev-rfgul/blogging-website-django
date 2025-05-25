@@ -1,0 +1,158 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<!-- Hero Section -->
+<div class="relative overflow-hidden bg-gradient-to-br from-indigo-900 via-purple-900 to-blue-900 text-white">
+    <div class="absolute inset-0">
+        <div class="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/cubes.png')] opacity-10"></div>
+    </div>
+    <div class="relative max-w-7xl mx-auto px-4 py-24 sm:px-6 lg:px-8">
+        <div class="text-center">
+            <h1 class="text-5xl md:text-6xl font-extrabold mb-6 bg-clip-text text-transparent bg-gradient-to-r from-blue-400 to-purple-400">
+                Welcome to BlogWave
+            </h1>
+            <p class="text-xl md:text-2xl text-blue-200 max-w-3xl mx-auto leading-relaxed">
+                A community-driven platform where knowledge meets creativity, and ideas transform into impactful stories.
+            </p>
+        </div>
+    </div>
+</div>
+
+<!-- Mission Section -->
+<div class="py-16 bg-white">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="grid md:grid-cols-2 gap-12 items-center">
+            <div class="space-y-6">
+                <h2 class="text-4xl font-bold text-gray-900">Our Mission</h2>
+                <div class="h-1 w-20 bg-gradient-to-r from-blue-500 to-purple-500"></div>
+                <p class="text-xl text-gray-600 leading-relaxed">
+                    To create a vibrant digital ecosystem where knowledge flows freely, ideas spark innovation, and diverse 
+                    perspectives unite to create collective wisdom.
+                </p>
+                <div class="flex space-x-4 pt-6">
+                    <a href="{% url 'about' %}" class="px-6 py-3 bg-gradient-to-r from-blue-600 to-purple-600 text-white rounded-lg hover:opacity-90 transition-opacity">
+                        Learn More
+                    </a>
+                </div>
+            </div>
+            <div class="grid grid-cols-2 gap-4">
+                <div class="bg-purple-50 p-6 rounded-xl">
+                    <div class="text-purple-600 text-4xl mb-4"><i class="fas fa-users"></i></div>
+                    <h3 class="text-xl font-semibold mb-2">Community First</h3>
+                    <p class="text-gray-600">Building connections that matter</p>
+                </div>
+                <div class="bg-blue-50 p-6 rounded-xl mt-8">
+                    <div class="text-blue-600 text-4xl mb-4"><i class="fas fa-lightbulb"></i></div>
+                    <h3 class="text-xl font-semibold mb-2">Innovation</h3>
+                    <p class="text-gray-600">Pushing boundaries daily</p>
+                </div>
+                <div class="bg-indigo-50 p-6 rounded-xl">
+                    <div class="text-indigo-600 text-4xl mb-4"><i class="fas fa-book-reader"></i></div>
+                    <h3 class="text-xl font-semibold mb-2">Learning</h3>
+                    <p class="text-gray-600">Continuous growth mindset</p>
+                </div>
+                <div class="bg-pink-50 p-6 rounded-xl mt-8">
+                    <div class="text-pink-600 text-4xl mb-4"><i class="fas fa-heart"></i></div>
+                    <h3 class="text-xl font-semibold mb-2">Passion</h3>
+                    <p class="text-gray-600">Driven by purpose</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Topics Section -->
+<div class="py-16 bg-gray-50">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="text-center mb-16">
+            <h2 class="text-4xl font-bold text-gray-900 mb-4">Explore Our Topics</h2>
+            <p class="text-xl text-gray-600">Dive into a world of knowledge across various domains</p>
+        </div>
+        <div class="grid md:grid-cols-3 gap-8">
+            <div class="group bg-white rounded-2xl shadow-lg overflow-hidden transform transition-transform hover:-translate-y-2">
+                <div class="h-2 bg-blue-500"></div>
+                <div class="p-8">
+                    <div class="text-blue-500 text-4xl mb-6 group-hover:scale-110 transition-transform">
+                        <i class="fas fa-graduation-cap"></i>
+                    </div>
+                    <h3 class="text-2xl font-bold mb-4">Education</h3>
+                    <p class="text-gray-600">Empowering minds through shared learning experiences and academic exploration.</p>
+                </div>
+            </div>
+
+            <div class="group bg-white rounded-2xl shadow-lg overflow-hidden transform transition-transform hover:-translate-y-2">
+                <div class="h-2 bg-green-500"></div>
+                <div class="p-8">
+                    <div class="text-green-500 text-4xl mb-6 group-hover:scale-110 transition-transform">
+                        <i class="fas fa-heartbeat"></i>
+                    </div>
+                    <h3 class="text-2xl font-bold mb-4">Health</h3>
+                    <p class="text-gray-600">Promoting holistic wellness through evidence-based health discussions.</p>
+                </div>
+            </div>
+
+            <div class="group bg-white rounded-2xl shadow-lg overflow-hidden transform transition-transform hover:-translate-y-2">
+                <div class="h-2 bg-orange-500"></div>
+                <div class="p-8">
+                    <div class="text-orange-500 text-4xl mb-6 group-hover:scale-110 transition-transform">
+                        <i class="fas fa-running"></i>
+                    </div>
+                    <h3 class="text-2xl font-bold mb-4">Sports</h3>
+                    <p class="text-gray-600">Celebrating athletic excellence and the transformative power of fitness.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Stats Section with Animation -->
+<div class="py-16 bg-gradient-to-r from-gray-900 to-blue-900 text-white">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="grid md:grid-cols-4 gap-8 text-center">
+            <div class="p-8 rounded-xl backdrop-blur-lg bg-white/5">
+                <div class="text-5xl font-bold text-blue-400 mb-4">10K+</div>
+                <div class="text-lg text-gray-300">Monthly Readers</div>
+            </div>
+            <div class="p-8 rounded-xl backdrop-blur-lg bg-white/5">
+                <div class="text-5xl font-bold text-green-400 mb-4">500+</div>
+                <div class="text-lg text-gray-300">Published Articles</div>
+            </div>
+            <div class="p-8 rounded-xl backdrop-blur-lg bg-white/5">
+                <div class="text-5xl font-bold text-purple-400 mb-4">50+</div>
+                <div class="text-lg text-gray-300">Expert Contributors</div>
+            </div>
+            <div class="p-8 rounded-xl backdrop-blur-lg bg-white/5">
+                <div class="text-5xl font-bold text-pink-400 mb-4">5M+</div>
+                <div class="text-lg text-gray-300">Words Shared</div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- CTA Section -->
+<div class="py-16 bg-white">
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+        <div class="bg-gradient-to-r from-purple-50 to-blue-50 rounded-3xl p-12 shadow-xl">
+            <h2 class="text-4xl font-bold text-gray-900 mb-6">Ready to Start Your Journey?</h2>
+            <p class="text-xl text-gray-600 mb-8">Join our community of passionate writers and readers today.</p>
+            {% if not user.is_authenticated %}
+            <div class="flex flex-col sm:flex-row justify-center gap-4">
+                <a href="{% url 'signup' %}" 
+                   class="px-8 py-4 bg-gradient-to-r from-blue-600 to-purple-600 text-white rounded-full font-medium hover:shadow-lg transform hover:-translate-y-1 transition-all inline-flex items-center justify-center">
+                    <i class="fas fa-user-plus mr-2"></i> Get Started
+                </a>
+                <a href="{% url 'login' %}" 
+                   class="px-8 py-4 border-2 border-purple-500 text-purple-600 rounded-full font-medium hover:bg-purple-50 transition-all inline-flex items-center justify-center">
+                    <i class="fas fa-sign-in-alt mr-2"></i> Sign In
+                </a>
+            </div>
+            {% else %}
+            <a href="{% url 'home' %}" 
+               class="px-8 py-4 bg-gradient-to-r from-blue-600 to-purple-600 text-white rounded-full font-medium hover:shadow-lg transform hover:-translate-y-1 transition-all inline-flex items-center justify-center">
+                <i class="fas fa-book-open mr-2"></i> Explore Content
+            </a>
+            {% endif %}
+        </div>
+    </div>
+</div>
+{% endblock %}

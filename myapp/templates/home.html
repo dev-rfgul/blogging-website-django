@@ -1,0 +1,122 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<!-- Hero Section -->
+<div class="relative bg-gradient-to-br from-blue-900 via-purple-900 to-indigo-900 py-16">
+    <div class="absolute inset-0">
+        <div class="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/cubes.png')] opacity-10"></div>
+    </div>
+    <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+        <h1 class="text-4xl md:text-5xl font-bold text-white mb-6">Welcome to BlogWave</h1>
+        <p class="text-xl text-blue-200 max-w-2xl mx-auto">Discover stories, ideas, and expertise from our community.</p>
+    </div>
+</div>
+
+<!-- Main Content -->
+<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 -mt-10">
+    <!-- Messages/Alerts -->
+    {% if messages %}
+    <div class="space-y-3 mb-8">
+        {% for message in messages %}
+        <div class="p-4 rounded-xl backdrop-blur-lg shadow-lg alert-{{ message.tags }} flex items-center transform hover:scale-102 transition-all">
+            {% if message.tags == 'success' %}
+            <i class="fas fa-check-circle mr-3 text-xl"></i>
+            {% elif message.tags == 'error' %}
+            <i class="fas fa-exclamation-circle mr-3 text-xl"></i>
+            {% else %}
+            <i class="fas fa-info-circle mr-3 text-xl"></i>
+            {% endif %}
+            {{ message }}
+        </div>
+        {% endfor %}
+    </div>
+    {% endif %}
+
+    <!-- Posts Grid -->
+    {% if posts %}
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+        {% for post in posts %}
+        <div class="bg-white rounded-2xl shadow-xl overflow-hidden hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2">
+            <!-- Post Image -->
+            <div class="h-56 overflow-hidden relative">
+                {% if post.image %}
+                <img src="{{ post.image.url }}" alt="{{ post.title }}" class="w-full h-full object-cover transform hover:scale-110 transition-transform duration-500">
+                {% else %}
+                <div class="w-full h-full bg-gradient-to-r from-blue-100 to-purple-100 flex items-center justify-center">
+                    <i class="fas fa-image text-gray-300 text-5xl"></i>
+                </div>
+                {% endif %}
+                <div class="absolute top-4 right-4 bg-white/90 backdrop-blur-sm px-3 py-1 rounded-full text-sm font-medium text-gray-700">
+                    <i class="fas fa-calendar-alt mr-1"></i>
+                    {{ post.created_at|date }}
+                </div>
+            </div>
+
+            <!-- Post Content -->
+            <div class="p-8">
+                <div class="flex items-center mb-4 text-sm text-gray-500">
+                    <div class="flex items-center">
+                        <i class="fas fa-user-circle text-2xl text-gray-400 mr-2"></i>
+                        <span>{{ post.author }}</span>
+                    </div>
+                </div>
+
+                <h3 class="text-2xl font-bold mb-4 text-gray-800 hover:text-blue-600 transition-colors">
+                    <a href="{% url 'post_detail' post.id %}">{{ post.title }}</a>
+                </h3>
+                
+                <p class="text-gray-600 mb-6 line-clamp-3">{{ post.description|truncatewords:30 }}</p>
+
+                <div class="flex items-center justify-between">
+                    <a href="{% url 'post_detail' post.id %}"
+                        class="inline-flex items-center px-6 py-3 bg-gradient-to-r from-blue-600 to-purple-600 text-white rounded-full font-medium hover:shadow-lg transition-all group">
+                        Read More
+                        <i class="fas fa-arrow-right ml-2 group-hover:translate-x-1 transition-transform"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+
+    {% else %}
+    <!-- Enhanced No Posts Found -->
+    <div class="max-w-2xl mx-auto text-center py-16">
+        <div class="bg-white rounded-2xl shadow-xl p-12">
+            <div class="text-8xl text-gray-200 mb-6 animate-pulse">
+                <i class="fas fa-newspaper"></i>
+            </div>
+            <h3 class="text-3xl font-bold text-gray-800 mb-4">No Posts Found</h3>
+            {% if category %}
+            <p class="text-xl text-gray-600 mb-8">There are no posts available in the <span class="font-medium text-blue-600">"{{ category }}"</span> category.</p>
+            {% else %}
+            <p class="text-xl text-gray-600 mb-8">There are no posts available at the moment.</p>
+            {% endif %}
+            <a href="{% url 'home' %}"
+                class="inline-flex items-center px-8 py-4 bg-gradient-to-r from-blue-600 to-purple-600 text-white rounded-full font-medium hover:shadow-lg transition-all">
+                <i class="fas fa-home mr-2"></i>
+                Back to Home
+            </a>
+        </div>
+    </div>
+    {% endif %}
+</div>
+
+<style>
+    .alert-success {
+        @apply bg-green-100/80 backdrop-blur-sm text-green-800 border-l-4 border-green-500;
+    }
+
+    .alert-error {
+        @apply bg-red-100/80 backdrop-blur-sm text-red-800 border-l-4 border-red-500;
+    }
+
+    .alert-info {
+        @apply bg-blue-100/80 backdrop-blur-sm text-blue-800 border-l-4 border-blue-500;
+    }
+
+    .alert-warning {
+        @apply bg-yellow-100/80 backdrop-blur-sm text-yellow-800 border-l-4 border-yellow-500;
+    }
+</style>
+{% endblock %}

@@ -1,0 +1,126 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="min-h-screen flex">
+    <!-- Left Side - Decorative -->
+    <div class="hidden lg:flex lg:w-1/2 bg-gradient-to-br from-blue-600 to-purple-600 relative">
+        <div class="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/cubes.png')] opacity-10"></div>
+        <div class="relative w-full flex items-center justify-center p-12">
+            <div class="text-center">
+                <h1 class="text-5xl font-bold text-white mb-6">Join Our Community</h1>
+                <p class="text-xl text-blue-100 max-w-md">Start your journey with us. Share your stories and connect with like-minded individuals.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Right Side - Signup Form -->
+    <div class="w-full lg:w-1/2 flex items-center justify-center p-8 bg-gray-50">
+        <div class="w-full max-w-md">
+            <!-- Header -->
+            <div class="text-center mb-8">
+                <h2 class="text-4xl font-bold text-gray-900 mb-2">Create Account</h2>
+                <p class="text-gray-600">Begin your creative journey today</p>
+            </div>
+
+            <!-- Form Card -->
+            <div class="bg-white rounded-2xl shadow-xl p-8">
+                <form method="POST" class="space-y-6">
+                    {% csrf_token %}
+
+                    <!-- Error Messages -->
+                    {% if form.errors %}
+                    <div class="bg-red-50 border-l-4 border-red-500 p-4 mb-6 rounded-r-lg">
+                        <div class="flex items-center">
+                            <div class="flex-shrink-0">
+                                <i class="fas fa-exclamation-circle text-red-500 text-xl"></i>
+                            </div>
+                            <div class="ml-3">
+                                <p class="text-sm text-red-700">
+                                    {% for field, errors in form.errors.items %}
+                                        {% for error in errors %}
+                                            {{ error }}<br>
+                                        {% endfor %}
+                                    {% endfor %}
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    {% endif %}
+
+                    <!-- Username Field -->
+                    <div class="space-y-2">
+                        <label for="username" class="block text-sm font-medium text-gray-700">Username</label>
+                        <div class="relative rounded-lg shadow-sm">
+                            <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
+                                <i class="fas fa-user text-blue-500"></i>
+                            </div>
+                            <input id="username" name="username" type="text" required
+                                class="pl-12 w-full px-4 py-4 border-2 border-gray-200 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all"
+                                placeholder="Choose a username"
+                                value="{{ form.username.value|default_if_none:'' }}">
+                        </div>
+                    </div>
+
+                    <!-- Password Fields -->
+                    <div class="space-y-2">
+                        <label for="password1" class="block text-sm font-medium text-gray-700">Password</label>
+                        <div class="relative rounded-lg shadow-sm">
+                            <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
+                                <i class="fas fa-lock text-blue-500"></i>
+                            </div>
+                            <input id="password1" name="password1" type="password" required
+                                class="pl-12 w-full px-4 py-4 border-2 border-gray-200 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all"
+                                placeholder="Create a strong password">
+                        </div>
+                        <p class="text-sm text-gray-500 flex items-center">
+                            <i class="fas fa-info-circle mr-2"></i>
+                            Must be at least 8 characters
+                        </p>
+                    </div>
+
+                    <div class="space-y-2">
+                        <label for="password2" class="block text-sm font-medium text-gray-700">Confirm Password</label>
+                        <div class="relative rounded-lg shadow-sm">
+                            <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
+                                <i class="fas fa-lock text-blue-500"></i>
+                            </div>
+                            <input id="password2" name="password2" type="password" required
+                                class="pl-12 w-full px-4 py-4 border-2 border-gray-200 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all"
+                                placeholder="Confirm your password">
+                        </div>
+                    </div>
+
+                    <!-- Terms Checkbox -->
+                    <div class="flex items-center bg-gray-50 p-4 rounded-lg">
+                        <input id="terms" name="terms" type="checkbox" required
+                            class="h-5 w-5 text-blue-600 focus:ring-blue-500 border-gray-300 rounded">
+                        <label for="terms" class="ml-3 block text-sm text-gray-700">
+                            I agree to the <a href="#" class="text-blue-600 hover:text-blue-500 font-medium">Terms</a> and 
+                            <a href="#" class="text-blue-600 hover:text-blue-500 font-medium">Privacy Policy</a>
+                        </label>
+                    </div>
+
+                    <!-- Submit Button -->
+                    <button type="submit"
+                        class="w-full flex items-center justify-center px-8 py-4 border border-transparent text-base font-medium rounded-lg text-white bg-gradient-to-r from-blue-600 to-purple-600 hover:opacity-90 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition-all transform hover:-translate-y-0.5">
+                        <i class="fas fa-user-plus mr-2"></i>
+                        Create Account
+                    </button>
+
+                 
+
+                    <!-- Login Link -->
+                    <div class="mt-8 text-center">
+                        <p class="text-gray-600">
+                            Already have an account?
+                            <a href="{% url 'login' %}" class="font-medium text-blue-600 hover:text-blue-500 transition-colors">
+                                Sign in here
+                            </a>
+                        </p>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

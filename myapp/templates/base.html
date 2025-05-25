@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BlogWave - Share Your Stories</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <!-- Add custom styles -->
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+        body {
+            font-family: 'Poppins', sans-serif;
+        }
+        .nav-link-hover {
+            @apply relative after:absolute after:bottom-0 after:left-0 after:h-0.5 after:w-0 after:bg-white 
+            after:transition-all after:duration-300 hover:after:w-full;
+        }
+    </style>
+</head>
+
+<body class="flex flex-col min-h-screen bg-gray-50">
+    {% if request.path != '/login/' and request.path != '/' %}
+    <!-- Enhanced Navbar -->
+    <nav class="bg-gradient-to-r from-blue-600 to-purple-600 text-white shadow-lg sticky top-0 z-50 backdrop-blur-lg bg-opacity-95">
+        <div class="container mx-auto px-4 py-4">
+            <div class="flex justify-between items-center">
+                <!-- Logo and Navigation -->
+                <div class="flex items-center space-x-8">
+                    <a href="{% url 'home' %}" class="text-2xl font-bold flex items-center space-x-2 hover:opacity-90 transition-opacity">
+                        <i class="fas fa-pen-fancy"></i>
+                        <span>BlogWave</span>
+                    </a>
+
+                    <div class="hidden md:flex space-x-8">
+                        <a href="{% url 'home' %}" class="nav-link-hover py-2">
+                            <i class="fas fa-home mr-2"></i> Home
+                        </a>
+                        <a href="{% url 'about' %}" class="nav-link-hover py-2">
+                            <i class="fas fa-info-circle mr-2"></i> About
+                        </a>
+                        <a href="{% url 'contact' %}" class="nav-link-hover py-2">
+                            <i class="fas fa-envelope mr-2"></i> Contact
+                        </a>
+                        
+                        <!-- Enhanced Categories Dropdown -->
+                        <div class="relative group">
+                            <button class="nav-link-hover py-2 flex items-center">
+                                <i class="fas fa-tags mr-2"></i> Categories
+                                <i class="fas fa-chevron-down ml-2 text-xs group-hover:rotate-180 transition-transform"></i>
+                            </button>
+                            <div class="absolute hidden group-hover:block w-56 mt-2 bg-white rounded-xl shadow-xl border border-gray-100 overflow-hidden">
+                                <a href="{% url 'category_filter' 'education' %}" 
+                                   class="flex items-center px-6 py-3 text-gray-700 hover:bg-blue-50 transition-colors">
+                                    <i class="fas fa-graduation-cap mr-3 text-blue-500"></i>
+                                    <span>Education</span>
+                                </a>
+                                <a href="{% url 'category_filter' 'health' %}" 
+                                   class="flex items-center px-6 py-3 text-gray-700 hover:bg-blue-50 transition-colors">
+                                    <i class="fas fa-heartbeat mr-3 text-red-500"></i>
+                                    <span>Health</span>
+                                </a>
+                                <a href="{% url 'category_filter' 'sports' %}" 
+                                   class="flex items-center px-6 py-3 text-gray-700 hover:bg-blue-50 transition-colors">
+                                    <i class="fas fa-running mr-3 text-green-500"></i>
+                                    <span>Sports</span>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Search and User Actions -->
+                <div class="flex items-center space-x-6">
+                    <form action="{% url 'search_posts' %}" method="GET" class="relative">
+                        <input type="search" name="q" placeholder="Search posts..."
+                            class="w-64 py-2 px-4 pr-10 rounded-full bg-white/10 backdrop-blur-sm text-white placeholder-white/70 focus:outline-none focus:ring-2 focus:ring-white/50 transition-all">
+                        <button type="submit" class="absolute right-3 top-1/2 transform -translate-y-1/2 text-white/70 hover:text-white">
+                            <i class="fas fa-search"></i>
+                        </button>
+                    </form>
+
+                    {% if user.is_authenticated %}
+                    <a href="{% url 'logout' %}" 
+                       class="flex items-center px-6 py-2 rounded-full bg-white/10 hover:bg-white/20 transition-all">
+                        <i class="fas fa-sign-out-alt mr-2"></i>
+                        <span>Logout</span>
+                    </a>
+                    {% endif %}
+
+                    <!-- Mobile Menu Button -->
+                    <button class="md:hidden focus:outline-none" id="mobile-menu-button">
+                        <i class="fas fa-bars text-2xl"></i>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Enhanced Mobile Menu -->
+            <div class="md:hidden hidden mt-4 rounded-xl bg-white/10 backdrop-blur-sm p-4" id="mobile-menu">
+                <div class="space-y-3">
+                    <a href="{% url 'home' %}" class="block px-4 py-2 rounded-lg hover:bg-white/10 transition-colors">
+                        <i class="fas fa-home mr-2"></i> Home
+                    </a>
+                    <a href="{% url 'about' %}" class="block px-4 py-2 rounded-lg hover:bg-white/10 transition-colors">
+                        <i class="fas fa-info-circle mr-2"></i> About
+                    </a>
+                    <a href="{% url 'contact' %}" class="block px-4 py-2 rounded-lg hover:bg-white/10 transition-colors">
+                        <i class="fas fa-envelope mr-2"></i> Contact
+                    </a>
+                    
+                    <!-- Mobile Categories -->
+                    <div class="relative">
+                        <button class="w-full px-4 py-2 rounded-lg hover:bg-white/10 transition-colors flex justify-between items-center"
+                                id="categories-toggle">
+                            <span><i class="fas fa-tags mr-2"></i> Categories</span>
+                            <i class="fas fa-chevron-down transition-transform"></i>
+                        </button>
+                        <div class="hidden mt-2 space-y-1 pl-6" id="mobile-categories">
+                            <a href="{% url 'category_filter' 'education' %}" class="block px-4 py-2 rounded-lg hover:bg-white/10 transition-colors">
+                                <i class="fas fa-graduation-cap mr-2"></i> Education
+                            </a>
+                            <a href="{% url 'category_filter' 'health' %}" class="block px-4 py-2 rounded-lg hover:bg-white/10 transition-colors">
+                                <i class="fas fa-heartbeat mr-2"></i> Health
+                            </a>
+                            <a href="{% url 'category_filter' 'sports' %}" class="block px-4 py-2 rounded-lg hover:bg-white/10 transition-colors">
+                                <i class="fas fa-running mr-2"></i> Sports
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+    {% endif %}
+
+    <!-- Main Content -->
+    <main class="flex-grow">
+        {% block content %}
+        {% endblock %}
+    </main>
+
+    {% if request.path != '/login/' and request.path != '/' %}
+    <!-- Enhanced Footer -->
+    <footer class="bg-gray-900 text-white py-16">
+        <div class="container mx-auto px-4">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-12">
+                <!-- Brand Section -->
+                <div class="space-y-6">
+                    <h3 class="text-2xl font-bold flex items-center">
+                        <i class="fas fa-pen-fancy mr-3"></i>
+                        BlogWave
+                    </h3>
+                    <p class="text-gray-400 leading-relaxed">
+                        Empowering voices, sharing stories, and connecting minds through the power of words.
+                    </p>
+                    <div class="flex space-x-4">
+                        <a href="#" class="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center hover:bg-white/20 transition-colors">
+                            <i class="fab fa-facebook-f"></i>
+                        </a>
+                        <a href="#" class="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center hover:bg-white/20 transition-colors">
+                            <i class="fab fa-twitter"></i>
+                        </a>
+                        <a href="#" class="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center hover:bg-white/20 transition-colors">
+                            <i class="fab fa-instagram"></i>
+                        </a>
+                        <a href="#" class="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center hover:bg-white/20 transition-colors">
+                            <i class="fab fa-linkedin-in"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Quick Links -->
+                <div class="space-y-6">
+                    <h4 class="text-xl font-semibold">Quick Links</h4>
+                    <ul class="space-y-4">
+                        <li>
+                            <a href="{% url 'home' %}" class="text-gray-400 hover:text-white transition-colors flex items-center">
+                                <i class="fas fa-chevron-right mr-2 text-xs"></i> Home
+                            </a>
+                        </li>
+                        <li>
+                            <a href="{% url 'about' %}" class="text-gray-400 hover:text-white transition-colors flex items-center">
+                                <i class="fas fa-chevron-right mr-2 text-xs"></i> About Us
+                            </a>
+                        </li>
+                        <li>
+                            <a href="{% url 'contact' %}" class="text-gray-400 hover:text-white transition-colors flex items-center">
+                                <i class="fas fa-chevron-right mr-2 text-xs"></i> Contact
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#" class="text-gray-400 hover:text-white transition-colors flex items-center">
+                                <i class="fas fa-chevron-right mr-2 text-xs"></i> Privacy Policy
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+
+                <!-- Categories -->
+                <div class="space-y-6">
+                    <h4 class="text-xl font-semibold">Categories</h4>
+                    <ul class="space-y-4">
+                        <li>
+                            <a href="{% url 'category_filter' 'education' %}" class="text-gray-400 hover:text-white transition-colors flex items-center">
+                                <i class="fas fa-graduation-cap mr-2"></i> Education
+                            </a>
+                        </li>
+                        <li>
+                            <a href="{% url 'category_filter' 'health' %}" class="text-gray-400 hover:text-white transition-colors flex items-center">
+                                <i class="fas fa-heartbeat mr-2"></i> Health
+                            </a>
+                        </li>
+                        <li>
+                            <a href="{% url 'category_filter' 'sports' %}" class="text-gray-400 hover:text-white transition-colors flex items-center">
+                                <i class="fas fa-running mr-2"></i> Sports
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+
+                <!-- Contact Info -->
+                <div class="space-y-6">
+                    <h4 class="text-xl font-semibold">Contact Info</h4>
+                    <ul class="space-y-4">
+                        <li class="flex items-center text-gray-400">
+                            <div class="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center mr-3">
+                                <i class="fas fa-map-marker-alt"></i>
+                            </div>
+                            <span>123 Blog Street, Digital City</span>
+                        </li>
+                        <li class="flex items-center text-gray-400">
+                            <div class="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center mr-3">
+                                <i class="fas fa-envelope"></i>
+                            </div>
+                            <span>info@blogwave.com</span>
+                        </li>
+                        <li class="flex items-center text-gray-400">
+                            <div class="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center mr-3">
+                                <i class="fas fa-phone-alt"></i>
+                            </div>
+                            <span>+1 234 567 890</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Copyright -->
+            <div class="border-t border-gray-800 mt-12 pt-8 text-center">
+                <p class="text-gray-400">&copy; 2023 BlogWave. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Mobile menu toggle with smooth animation
+        const mobileMenuButton = document.getElementById('mobile-menu-button');
+        const mobileMenu = document.getElementById('mobile-menu');
+        const categoriesToggle = document.getElementById('categories-toggle');
+        const mobileCategories = document.getElementById('mobile-categories');
+
+        mobileMenuButton.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
+        });
+
+        categoriesToggle.addEventListener('click', () => {
+            mobileCategories.classList.toggle('hidden');
+            categoriesToggle.querySelector('i').classList.toggle('rotate-180');
+        });
+    </script>
+    {% endif %}
+</body>
+</html>
